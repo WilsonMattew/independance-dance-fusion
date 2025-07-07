@@ -5,6 +5,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { ArrowLeft, CreditCard, Check, IndianRupee, Shield, Clock } from "lucide-react";
+import { supabase } from "@/lib/supabase";
+import { useToast } from "@/hooks/use-toast";
+import { useNavigate } from "react-router-dom";
 
 interface PaymentStepProps {
   formData: any;
@@ -13,49 +16,66 @@ interface PaymentStepProps {
 }
 
 const PaymentStep = ({ formData, updateFormData, onPrev }: PaymentStepProps) => {
+  const { toast } = useToast();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Load Cashfree SDK
+    const script = document.createElement('script');
+    script.src = 'https://sdk.cashfree.com/js/ui/2.0.0/cashfree.prod.js';
+    script.async = true;
+    document.head.appendChild(script);
+
+    return () => {
+      document.head.removeChild(script);
+    };
+  }, []);
+
   const [processing, setProcessing] = useState(false);
 
   const calculateAmount = () => {
-    let baseAmount = 500; // Base registration fee
-    
-    if (formData.danceType === 'duo') {
-      baseAmount = 800;
-    } else if (formData.danceType === 'group') {
-      baseAmount = 1200;
-    }
-    
-    return baseAmount;
+    return 500; // Fixed registration fee
   };
 
   useEffect(() => {
     const amount = calculateAmount();
     updateFormData({ amount });
-  }, [formData.danceType]);
+  }, []);
 
   const handlePayment = async () => {
     setProcessing(true);
     
     try {
-      // Here you would integrate with Cashfree payment gateway
-      // For demo purposes, we'll simulate the payment process
-      
-      console.log('Initiating payment for:', formData);
-      
-      // Simulate API call to create payment session
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      // In a real implementation, you would:
-      // 1. Send form data to Supabase edge function
-      // 2. Create payment session with Cashfree
-      // 3. Open Cashfree checkout popup
-      // 4. Handle payment success/failure
-      
-      // For now, we'll redirect to success page
-      window.location.href = '/registration-success';
-      
-    } catch (error) {
-      console.error('Payment failed:', error);
-      alert('Payment failed. Please try again.');
+      toast({
+        title: "Processing Payment",
+        description: "Please wait while we initialize your payment...",
+      });
+
+      // Call Supabase Edge Function to create payment session
+      const { data, error } = await supabase.functions.invoke('create-payment-session', {
+        body: { registrationData: formData }
+      });
+
+      if (error) throw error;
+
+      // Initialize Cashfree Checkout
+      const cashfree = (window as any).Cashfree;
+      if (!cashfree) {
+        throw new Error('Cashfree SDK not loaded');
+      }
+
+      cashfree.checkout({
+        paymentSessionId: data.payment_session_id,
+        returnUrl: `${window.location.origin}/registration-success?order_id=${data.order_id}`
+      });
+
+    } catch (error: any) {
+      console.error('Payment error:', error);
+      toast({
+        title: "Payment Error",
+        description: error.message || "Failed to initialize payment. Please try again.",
+        variant: "destructive",
+      });
       setProcessing(false);
     }
   };

@@ -98,23 +98,23 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-green-50 py-8 px-4">
-      <div className="container mx-auto max-w-4xl">
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-green-50 py-4 sm:py-8 px-4">
+      <div className="container mx-auto max-w-4xl px-2 sm:px-4">
         {/* Header */}
-        <div className="text-center mb-8">
-          <Link to="/" className="inline-flex items-center text-blue-900 hover:text-orange-500 mb-4 transition-colors">
+        <div className="text-center mb-6 sm:mb-8">
+          <Link to="/" className="inline-flex items-center text-blue-900 hover:text-orange-500 mb-4 transition-colors text-sm sm:text-base">
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Home
           </Link>
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-orange-500 via-blue-900 to-green-600 bg-clip-text text-transparent mb-4">
+          <h1 className="text-2xl sm:text-4xl font-bold bg-gradient-to-r from-orange-500 via-blue-900 to-green-600 bg-clip-text text-transparent mb-4">
             IndepeDANCE Registration
           </h1>
-          <p className="text-gray-600">Complete your registration in 3 simple steps</p>
+          <p className="text-gray-600 text-sm sm:text-base">Complete your registration in 3 simple steps</p>
         </div>
 
         {/* Progress Bar */}
-        <Card className="mb-8 shadow-lg">
-          <CardContent className="p-6">
+        <Card className="mb-6 sm:mb-8 shadow-lg">
+          <CardContent className="p-4 sm:p-6">
             <div className="flex items-center justify-between mb-4">
               {steps.map((step, index) => (
                 <div key={step.number} className="flex items-center">
@@ -149,12 +149,12 @@ const Register = () => {
 
         {/* Step Content */}
         <Card className="shadow-lg">
-          <CardHeader className="bg-gradient-to-r from-orange-100 to-green-100">
-            <CardTitle className="text-2xl text-blue-900">
+          <CardHeader className="bg-gradient-to-r from-orange-100 to-green-100 p-4 sm:p-6">
+            <CardTitle className="text-lg sm:text-2xl text-blue-900">
               Step {currentStep}: {steps[currentStep - 1].title}
             </CardTitle>
           </CardHeader>
-          <CardContent className="p-8">
+          <CardContent className="p-4 sm:p-8">
             {renderStepContent()}
           </CardContent>
         </Card>

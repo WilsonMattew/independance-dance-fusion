@@ -8,6 +8,9 @@ import Index from "./pages/Index";
 import Register from "./pages/Register";
 import RegistrationSuccess from "./pages/RegistrationSuccess";
 import PaymentFailed from "./pages/PaymentFailed";
+import Status from "./pages/Status";
+import Rules from "./pages/Rules";
+import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -23,6 +26,9 @@ const App = () => (
           <Route path="/register" element={<Register />} />
           <Route path="/registration-success" element={<RegistrationSuccess />} />
           <Route path="/payment-failed" element={<PaymentFailed />} />
+          <Route path="/status" element={<Status />} />
+          <Route path="/rules" element={<Rules />} />
+          <Route path="/admin" element={<Admin />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

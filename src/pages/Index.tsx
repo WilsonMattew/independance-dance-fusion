@@ -194,8 +194,9 @@ const Index = () => {
               <h3 className="text-xl font-bold mb-4">Quick Links</h3>
               <div className="space-y-2">
                 <Link to="/register" className="block hover:text-orange-300 transition-colors">Register Now</Link>
+                <Link to="/status" className="block hover:text-orange-300 transition-colors">Check Status</Link>
+                <Link to="/rules" className="block hover:text-orange-300 transition-colors">Competition Rules</Link>
                 <Link to="/admin" className="block hover:text-orange-300 transition-colors">Admin Panel</Link>
-                <a href="#" className="block hover:text-orange-300 transition-colors">Privacy Policy</a>
               </div>
             </div>
             <div>

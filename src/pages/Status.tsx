@@ -12,15 +12,15 @@ import { useToast } from "@/hooks/use-toast";
 const Status = () => {
   const [email, setEmail] = useState('');
   const [mobile, setMobile] = useState('');
-  const [registration, setRegistration] = useState<any>(null);
+  const [registrationId, setRegistrationId] = useState('');
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
 
   const searchRegistration = async () => {
-    if (!email && !mobile) {
+    if (!email && !mobile && !registrationId) {
       toast({
         title: "Search Required",
-        description: "Please enter either email or mobile number to search.",
+        description: "Please enter email, mobile number, or registration ID to search.",
         variant: "destructive",
       });
       return;
@@ -32,7 +32,9 @@ const Status = () => {
         .from('registrations')
         .select('*');
 
-      if (email) {
+      if (registrationId) {
+        query = query.eq('id', registrationId);
+      } else if (email) {
         query = query.eq('email', email.toLowerCase());
       } else if (mobile) {
         query = query.eq('mobile', mobile);
@@ -44,19 +46,15 @@ const Status = () => {
         if (error.code === 'PGRST116') {
           toast({
             title: "Registration Not Found",
-            description: "No registration found with the provided details. Please check your email/mobile or contact support.",
+            description: "No registration found with the provided details. Please check your details or contact support.",
             variant: "destructive",
           });
         } else {
           throw error;
         }
-        setRegistration(null);
       } else {
-        setRegistration(data);
-        toast({
-          title: "Registration Found",
-          description: "Your registration details have been loaded successfully.",
-        });
+        // Redirect to status details page
+        window.location.href = `/status/${data.id}`;
       }
     } catch (error) {
       console.error('Error searching registration:', error);
@@ -93,30 +91,41 @@ const Status = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-green-50 py-8 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-green-50 py-4 sm:py-8 px-2 sm:px-4">
       <div className="container mx-auto max-w-4xl">
         {/* Header */}
-        <div className="text-center mb-8">
-          <Link to="/" className="inline-flex items-center text-accent hover:text-primary mb-4 transition-colors">
+        <div className="text-center mb-6 sm:mb-8">
+          <Link to="/" className="inline-flex items-center text-accent hover:text-primary mb-4 transition-colors text-sm sm:text-base">
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Home
           </Link>
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent mb-4">
+          <h1 className="text-2xl sm:text-4xl font-bold bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent mb-4">
             Check Audition Status
           </h1>
-          <p className="text-muted-foreground">Enter your details to check your registration and audition status</p>
+          <p className="text-muted-foreground text-sm sm:text-base">Enter your details to check your registration and audition status</p>
         </div>
 
         {/* Search Form */}
-        <Card className="mb-8 shadow-lg">
-          <CardHeader className="bg-gradient-to-r from-orange-100 to-green-100">
-            <CardTitle className="text-2xl text-accent flex items-center">
-              <Search className="w-6 h-6 mr-2" />
+        <Card className="mb-6 sm:mb-8 shadow-lg">
+          <CardHeader className="bg-gradient-to-r from-orange-100 to-green-100 p-4 sm:p-6">
+            <CardTitle className="text-lg sm:text-2xl text-accent flex items-center">
+              <Search className="w-5 h-5 sm:w-6 sm:h-6 mr-2" />
               Search Your Registration
             </CardTitle>
           </CardHeader>
-          <CardContent className="p-6">
-            <div className="grid md:grid-cols-2 gap-4 mb-6">
+          <CardContent className="p-4 sm:p-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+              <div>
+                <Label htmlFor="registrationId">Registration ID</Label>
+                <Input
+                  id="registrationId"
+                  type="text"
+                  placeholder="Enter registration ID"
+                  value={registrationId}
+                  onChange={(e) => setRegistrationId(e.target.value)}
+                  className="mt-1"
+                />
+              </div>
               <div>
                 <Label htmlFor="email">Email Address</Label>
                 <Input
@@ -142,141 +151,47 @@ const Status = () => {
             </div>
             <Button 
               onClick={searchRegistration} 
-              disabled={loading || (!email && !mobile)}
-              className="w-full md:w-auto"
+              disabled={loading || (!email && !mobile && !registrationId)}
+              className="w-full sm:w-auto"
             >
               {loading ? 'Searching...' : 'Search Registration'}
             </Button>
             <p className="text-sm text-muted-foreground mt-2">
-              Enter either email OR mobile number to search
+              Enter registration ID, email, or mobile number to search
             </p>
           </CardContent>
         </Card>
 
-        {/* Registration Details */}
-        {registration && (
-          <Card className="shadow-lg">
-            <CardHeader className="bg-gradient-to-r from-green-100 to-orange-100">
-              <CardTitle className="text-2xl text-accent">
-                Registration Details
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="p-6">
-              <div className="grid md:grid-cols-2 gap-6">
-                {/* Personal Information */}
-                <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-primary flex items-center">
-                    <User className="w-5 h-5 mr-2" />
-                    Personal Information
-                  </h3>
-                  <div className="space-y-2">
-                    <p><strong>Name:</strong> {registration.name}</p>
-                    <p><strong>Age:</strong> {registration.age} years</p>
-                    <p><strong>Gender:</strong> {registration.gender}</p>
-                    <p className="flex items-center">
-                      <Mail className="w-4 h-4 mr-2" />
-                      {registration.email}
-                    </p>
-                    <p className="flex items-center">
-                      <Phone className="w-4 h-4 mr-2" />
-                      {registration.mobile}
-                    </p>
-                    <p><strong>School/College:</strong> {registration.school_college}</p>
-                  </div>
-                </div>
 
-                {/* Competition Details */}
-                <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-secondary flex items-center">
-                    <Calendar className="w-5 h-5 mr-2" />
-                    Competition Details
-                  </h3>
-                  <div className="space-y-2">
-                    <p><strong>Dance Type:</strong> <Badge variant="outline">{registration.dance_type}</Badge></p>
-                    <p><strong>Age Group:</strong> <Badge variant="outline">{registration.age_group}</Badge></p>
-                    <p><strong>Theme:</strong> <Badge variant="outline">{registration.theme}</Badge></p>
-                    <p><strong>Category:</strong> <Badge variant="outline">{registration.category}</Badge></p>
-                    {registration.participant1_name && (
-                      <p><strong>Participant 1:</strong> {registration.participant1_name}</p>
-                    )}
-                    {registration.participant2_name && (
-                      <p><strong>Participant 2:</strong> {registration.participant2_name}</p>
-                    )}
-                    {registration.group_members && (
-                      <div>
-                        <strong>Group Members:</strong>
-                        <ul className="list-disc list-inside ml-4">
-                          {registration.group_members.map((member: string, index: number) => (
-                            <li key={index}>{member}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              {/* Audition Status */}
-              <div className="mt-8 p-6 rounded-lg border-2 border-dashed border-primary/20 bg-gradient-to-r from-orange-50 to-green-50">
-                <h3 className="text-xl font-bold text-center mb-4">Audition Status</h3>
-                <div className="text-center">
-                  <Badge className={`text-lg px-4 py-2 ${getStatusColor(registration.audition_status)}`}>
-                    {getStatusText(registration.audition_status)}
-                  </Badge>
-                  {registration.admin_notes && (
-                    <div className="mt-4 p-4 bg-white rounded-lg border">
-                      <h4 className="font-semibold text-accent mb-2">Admin Notes:</h4>
-                      <p className="text-muted-foreground">{registration.admin_notes}</p>
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* Video Preview */}
-              {registration.video_url && (
-                <div className="mt-6">
-                  <h3 className="text-lg font-semibold text-accent flex items-center mb-3">
-                    <Eye className="w-5 h-5 mr-2" />
-                    Your Audition Video
-                  </h3>
-                  <div className="aspect-video rounded-lg overflow-hidden bg-black">
-                    <video
-                      controls
-                      className="w-full h-full object-contain"
-                      src={registration.video_url}
-                    >
-                      Your browser does not support the video tag.
-                    </video>
-                  </div>
-                </div>
-              )}
-
-              {/* Registration Date */}
-              <div className="mt-6 text-center text-sm text-muted-foreground">
-                Registered on: {new Date(registration.created_at).toLocaleDateString('en-IN', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                  hour: '2-digit',
-                  minute: '2-digit'
-                })}
-              </div>
-            </CardContent>
-          </Card>
-        )}
+        {/* Quick Links */}
+        <div className="text-center mb-6 sm:mb-8">
+          <p className="text-muted-foreground mb-4 text-sm sm:text-base">Quick access to other pages:</p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link to="/rules">
+              <Button variant="outline" className="w-full sm:w-auto">
+                View Competition Rules
+              </Button>
+            </Link>
+            <Link to="/">
+              <Button variant="outline" className="w-full sm:w-auto">
+                Back to Home
+              </Button>
+            </Link>
+          </div>
+        </div>
 
         {/* Contact Information */}
-        <Card className="mt-8 shadow-lg">
-          <CardContent className="p-6 text-center">
+        <Card className="shadow-lg">
+          <CardContent className="p-4 sm:p-6 text-center">
             <h3 className="text-lg font-semibold text-accent mb-2">Need Help?</h3>
-            <p className="text-muted-foreground mb-4">
+            <p className="text-muted-foreground mb-4 text-sm sm:text-base">
               If you have any questions about your registration or audition status, please contact us:
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <a href="mailto:info@npanashik.com" className="text-primary hover:text-primary/80">
+              <a href="mailto:info@npanashik.com" className="text-primary hover:text-primary/80 text-sm sm:text-base">
                 📧 info@npanashik.com
               </a>
-              <a href="tel:+919876543210" className="text-primary hover:text-primary/80">
+              <a href="tel:+919876543210" className="text-primary hover:text-primary/80 text-sm sm:text-base">
                 📞 +91 98765 43210
               </a>
             </div>

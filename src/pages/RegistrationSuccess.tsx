@@ -139,18 +139,34 @@ const RegistrationSuccess = () => {
           </Card>
         </div>
 
-        {/* Registration ID */}
-        <Card className="bg-gradient-to-r from-orange-100 to-green-100 border-2 border-orange-200 shadow-lg mb-8">
-          <CardContent className="p-6 text-center">
-            <h3 className="text-xl font-bold text-gray-800 mb-2">Your Registration ID</h3>
-            <Badge variant="secondary" className="bg-white text-gray-800 text-lg px-4 py-2 font-mono">
-              IND-2024-{Math.random().toString(36).substr(2, 8).toUpperCase()}
-            </Badge>
-            <p className="text-sm text-gray-600 mt-2">
-              Please save this ID for future reference
-            </p>
-          </CardContent>
-        </Card>
+        {/* Registration ID & Status Link */}
+        <div className="grid md:grid-cols-2 gap-6 mb-8">
+          <Card className="bg-gradient-to-r from-orange-100 to-green-100 border-2 border-orange-200 shadow-lg">
+            <CardContent className="p-6 text-center">
+              <h3 className="text-xl font-bold text-gray-800 mb-2">Your Registration ID</h3>
+              <Badge variant="secondary" className="bg-white text-gray-800 text-lg px-4 py-2 font-mono">
+                IND-2024-{Math.random().toString(36).substr(2, 8).toUpperCase()}
+              </Badge>
+              <p className="text-sm text-gray-600 mt-2">
+                Please save this ID for future reference
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-r from-blue-100 to-purple-100 border-2 border-blue-200 shadow-lg">
+            <CardContent className="p-6 text-center">
+              <h3 className="text-xl font-bold text-gray-800 mb-2">Check Your Status</h3>
+              <Link to="/status">
+                <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full mb-2">
+                  View Status Now
+                </Button>
+              </Link>
+              <p className="text-sm text-gray-600">
+                Track your audition progress anytime
+              </p>
+            </CardContent>
+          </Card>
+        </div>
 
         {/* Footer Actions */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center">

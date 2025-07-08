@@ -37,7 +37,7 @@ serve(async (req) => {
         customer_phone: registrationData.mobile
       },
       order_meta: {
-        return_url: `${req.headers.get('origin')}/payment-success`,
+        return_url: `${req.headers.get('origin')}/registration-success`,
         notify_url: `${req.headers.get('origin')}/supabase/functions/v1/cashfree-webhook`
       }
     }
@@ -68,7 +68,24 @@ serve(async (req) => {
     const { data: preReg, error: preRegError } = await supabase
       .from('pre_registrations')
       .insert({
-        ...registrationData,
+        name: registrationData.name,
+        date_of_birth: registrationData.dateOfBirth,
+        age: registrationData.age,
+        gender: registrationData.gender,
+        address: registrationData.address,
+        mobile: registrationData.mobile,
+        alternate_mobile: registrationData.alternateMobile,
+        email: registrationData.email,
+        school_college: registrationData.schoolCollege,
+        teacher_name: registrationData.teacherName,
+        dance_type: registrationData.danceType,
+        age_group: registrationData.ageGroup,
+        theme: registrationData.theme,
+        category: registrationData.category,
+        participant1_name: registrationData.participant1Name,
+        participant2_name: registrationData.participant2Name,
+        group_members: registrationData.groupMembers,
+        video_url: registrationData.videoUrl,
         payment_session_id: cashfreeData.payment_session_id,
         amount: amount,
         status: 'pending'

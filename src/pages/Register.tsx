@@ -98,37 +98,37 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-green-50 py-4 sm:py-8 px-4">
-      <div className="container mx-auto max-w-4xl px-2 sm:px-4">
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-green-50 py-4 sm:py-8 px-2 sm:px-4">
+      <div className="container mx-auto max-w-4xl">
         {/* Header */}
-        <div className="text-center mb-6 sm:mb-8">
+        <div className="text-center mb-4 sm:mb-8">
           <Link to="/" className="inline-flex items-center text-blue-900 hover:text-orange-500 mb-4 transition-colors text-sm sm:text-base">
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Home
           </Link>
-          <h1 className="text-2xl sm:text-4xl font-bold bg-gradient-to-r from-orange-500 via-blue-900 to-green-600 bg-clip-text text-transparent mb-4">
+          <h1 className="text-xl sm:text-2xl lg:text-4xl font-bold bg-gradient-to-r from-orange-500 via-blue-900 to-green-600 bg-clip-text text-transparent mb-2 sm:mb-4 px-4">
             IndepeDANCE Registration
           </h1>
-          <p className="text-gray-600 text-sm sm:text-base">Complete your registration in 3 simple steps</p>
+          <p className="text-gray-600 text-sm sm:text-base px-4">Complete your registration in 3 simple steps</p>
         </div>
 
         {/* Progress Bar */}
-        <Card className="mb-6 sm:mb-8 shadow-lg">
-          <CardContent className="p-4 sm:p-6">
+        <Card className="mb-4 sm:mb-8 shadow-lg mx-2 sm:mx-0">
+          <CardContent className="p-3 sm:p-6">
             <div className="flex items-center justify-between mb-4">
               {steps.map((step, index) => (
-                <div key={step.number} className="flex items-center">
-                  <div className={`flex items-center justify-center w-10 h-10 rounded-full font-bold text-sm transition-all duration-300 ${
+                <div key={step.number} className="flex items-center flex-1">
+                  <div className={`flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full font-bold text-xs sm:text-sm transition-all duration-300 ${
                     step.completed 
                       ? 'bg-green-500 text-white' 
                       : currentStep === step.number 
                         ? 'bg-orange-500 text-white' 
                         : 'bg-gray-200 text-gray-600'
                   }`}>
-                    {step.completed ? <CheckCircle className="w-5 h-5" /> : step.number}
+                    {step.completed ? <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5" /> : step.number}
                   </div>
-                  <div className="ml-3 hidden md:block">
-                    <div className={`font-medium ${
+                  <div className="ml-2 sm:ml-3 hidden sm:block">
+                    <div className={`font-medium text-sm sm:text-base ${
                       currentStep === step.number ? 'text-orange-600' : 
                       step.completed ? 'text-green-600' : 'text-gray-500'
                     }`}>
@@ -136,25 +136,36 @@ const Register = () => {
                     </div>
                   </div>
                   {index < steps.length - 1 && (
-                    <div className={`hidden md:block w-16 h-1 mx-4 rounded ${
+                    <div className={`flex-1 h-0.5 sm:h-1 mx-2 sm:mx-4 rounded ${
                       step.completed ? 'bg-green-500' : 'bg-gray-200'
                     }`} />
                   )}
                 </div>
               ))}
             </div>
+            
+            {/* Mobile step titles */}
+            <div className="sm:hidden text-center mb-4">
+              <div className={`font-medium text-sm ${
+                currentStep === steps[currentStep - 1].number ? 'text-orange-600' : 
+                steps[currentStep - 1].completed ? 'text-green-600' : 'text-gray-500'
+              }`}>
+                {steps[currentStep - 1].title}
+              </div>
+            </div>
+            
             <Progress value={calculateProgress()} className="w-full" />
           </CardContent>
         </Card>
 
         {/* Step Content */}
-        <Card className="shadow-lg">
-          <CardHeader className="bg-gradient-to-r from-orange-100 to-green-100 p-4 sm:p-6">
-            <CardTitle className="text-lg sm:text-2xl text-blue-900">
+        <Card className="shadow-lg mx-2 sm:mx-0">
+          <CardHeader className="bg-gradient-to-r from-orange-100 to-green-100 p-3 sm:p-6">
+            <CardTitle className="text-base sm:text-lg lg:text-2xl text-blue-900 text-center sm:text-left">
               Step {currentStep}: {steps[currentStep - 1].title}
             </CardTitle>
           </CardHeader>
-          <CardContent className="p-4 sm:p-8">
+          <CardContent className="p-3 sm:p-6 lg:p-8">
             {renderStepContent()}
           </CardContent>
         </Card>

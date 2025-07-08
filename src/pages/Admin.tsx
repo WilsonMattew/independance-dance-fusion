@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -134,19 +135,19 @@ const Admin = () => {
   const applyFilters = () => {
     let filtered = [...registrations];
 
-    if (filters.danceType) {
+    if (filters.danceType && filters.danceType !== 'all') {
       filtered = filtered.filter(reg => reg.dance_type === filters.danceType);
     }
-    if (filters.ageGroup) {
+    if (filters.ageGroup && filters.ageGroup !== 'all') {
       filtered = filtered.filter(reg => reg.age_group === filters.ageGroup);
     }
-    if (filters.theme) {
+    if (filters.theme && filters.theme !== 'all') {
       filtered = filtered.filter(reg => reg.theme === filters.theme);
     }
-    if (filters.category) {
+    if (filters.category && filters.category !== 'all') {
       filtered = filtered.filter(reg => reg.category === filters.category);
     }
-    if (filters.status) {
+    if (filters.status && filters.status !== 'all') {
       filtered = filtered.filter(reg => reg.audition_status === filters.status);
     }
     if (filters.search) {
@@ -300,7 +301,7 @@ const Admin = () => {
                     <SelectValue placeholder="All" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">All</SelectItem>
+                    <SelectItem value="all">All</SelectItem>
                     <SelectItem value="solo">Solo</SelectItem>
                     <SelectItem value="duo">Duo</SelectItem>
                     <SelectItem value="group">Group</SelectItem>
@@ -314,7 +315,7 @@ const Admin = () => {
                     <SelectValue placeholder="All" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">All</SelectItem>
+                    <SelectItem value="all">All</SelectItem>
                     <SelectItem value="7-9">7-9 Years</SelectItem>
                     <SelectItem value="9-12">9-12 Years</SelectItem>
                     <SelectItem value="12-17">12-17 Years</SelectItem>
@@ -328,7 +329,7 @@ const Admin = () => {
                     <SelectValue placeholder="All" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">All</SelectItem>
+                    <SelectItem value="all">All</SelectItem>
                     <SelectItem value="Naya Bharat">Naya Bharat</SelectItem>
                     <SelectItem value="Mythology">Mythology</SelectItem>
                   </SelectContent>
@@ -341,7 +342,7 @@ const Admin = () => {
                     <SelectValue placeholder="All" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">All</SelectItem>
+                    <SelectItem value="all">All</SelectItem>
                     <SelectItem value="Western Freestyle">Western Freestyle</SelectItem>
                     <SelectItem value="Classical">Classical</SelectItem>
                     <SelectItem value="Folk">Folk</SelectItem>
@@ -355,7 +356,7 @@ const Admin = () => {
                     <SelectValue placeholder="All" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">All</SelectItem>
+                    <SelectItem value="all">All</SelectItem>
                     <SelectItem value="under_review">Under Review</SelectItem>
                     <SelectItem value="approved">Approved</SelectItem>
                     <SelectItem value="rejected">Rejected</SelectItem>

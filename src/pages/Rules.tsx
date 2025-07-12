@@ -234,6 +234,130 @@ const Rules = () => {
           </CardContent>
         </Card>
 
+        {/* Point System */}
+        <Card className="mb-8 shadow-lg">
+          <CardHeader className="bg-gradient-to-r from-yellow-100 to-orange-100">
+            <CardTitle className="text-2xl text-accent flex items-center">
+              <Award className="w-6 h-6 mr-2" />
+              Point System for School Trophy
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="p-6">
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse">
+                <thead>
+                  <tr className="border-b-2 border-primary/20">
+                    <th className="text-left p-3 font-semibold text-primary">Category</th>
+                    <th className="text-center p-3 font-semibold text-primary">1st Place</th>
+                    <th className="text-center p-3 font-semibold text-secondary">2nd Place</th>
+                    <th className="text-center p-3 font-semibold text-accent">3rd Place</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="border-b border-gray-200">
+                    <td className="p-3 font-medium">Solo</td>
+                    <td className="text-center p-3">
+                      <Badge className="bg-primary text-primary-foreground">10 Points</Badge>
+                    </td>
+                    <td className="text-center p-3">
+                      <Badge className="bg-secondary text-secondary-foreground">5 Points</Badge>
+                    </td>
+                    <td className="text-center p-3">
+                      <Badge className="bg-accent text-accent-foreground">3 Points</Badge>
+                    </td>
+                  </tr>
+                  <tr className="border-b border-gray-200">
+                    <td className="p-3 font-medium">Duet</td>
+                    <td className="text-center p-3">
+                      <Badge className="bg-primary text-primary-foreground">20 Points</Badge>
+                    </td>
+                    <td className="text-center p-3">
+                      <Badge className="bg-secondary text-secondary-foreground">15 Points</Badge>
+                    </td>
+                    <td className="text-center p-3">
+                      <Badge className="bg-accent text-accent-foreground">10 Points</Badge>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="p-3 font-medium">Group</td>
+                    <td className="text-center p-3">
+                      <Badge className="bg-primary text-primary-foreground">40 Points</Badge>
+                    </td>
+                    <td className="text-center p-3">
+                      <Badge className="bg-secondary text-secondary-foreground">30 Points</Badge>
+                    </td>
+                    <td className="text-center p-3">
+                      <Badge className="bg-accent text-accent-foreground">20 Points</Badge>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Time Slots */}
+        <Card className="mb-8 shadow-lg">
+          <CardHeader className="bg-gradient-to-r from-blue-100 to-green-100">
+            <CardTitle className="text-2xl text-accent flex items-center">
+              <Clock className="w-6 h-6 mr-2" />
+              Time Slots (Per Round)
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="p-6">
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse">
+                <thead>
+                  <tr className="border-b-2 border-primary/20">
+                    <th className="text-left p-3 font-semibold text-primary">Category</th>
+                    <th className="text-center p-3 font-semibold text-primary">Audition 1</th>
+                    <th className="text-center p-3 font-semibold text-secondary">Audition 2</th>
+                    <th className="text-center p-3 font-semibold text-accent">Final</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="border-b border-gray-200">
+                    <td className="p-3 font-medium">Solo</td>
+                    <td className="text-center p-3">
+                      <Badge variant="outline" className="border-primary text-primary">1:30 mins</Badge>
+                    </td>
+                    <td className="text-center p-3">
+                      <Badge variant="outline" className="border-secondary text-secondary">2 mins</Badge>
+                    </td>
+                    <td className="text-center p-3">
+                      <Badge variant="outline" className="border-accent text-accent">2 mins</Badge>
+                    </td>
+                  </tr>
+                  <tr className="border-b border-gray-200">
+                    <td className="p-3 font-medium">Duet</td>
+                    <td className="text-center p-3">
+                      <Badge variant="outline" className="border-primary text-primary">2:30 mins</Badge>
+                    </td>
+                    <td className="text-center p-3">
+                      <Badge variant="outline" className="border-secondary text-secondary">3 mins</Badge>
+                    </td>
+                    <td className="text-center p-3">
+                      <Badge variant="outline" className="border-accent text-accent">3 mins</Badge>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="p-3 font-medium">Group</td>
+                    <td className="text-center p-3">
+                      <Badge variant="outline" className="border-primary text-primary">3:20 mins</Badge>
+                    </td>
+                    <td className="text-center p-3">
+                      <Badge variant="outline" className="border-secondary text-secondary">4 mins</Badge>
+                    </td>
+                    <td className="text-center p-3">
+                      <Badge variant="outline" className="border-accent text-accent">4 mins</Badge>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </CardContent>
+        </Card>
+
         {/* Competition Timeline */}
         <Card className="mb-8 shadow-lg">
           <CardHeader className="bg-gradient-to-r from-green-100 to-orange-100">
@@ -258,7 +382,17 @@ const Rules = () => {
               <div className="flex items-center p-4 border-l-4 border-accent bg-accent/5">
                 <div className="w-3 h-3 bg-accent rounded-full mr-4"></div>
                 <div>
-                  <h4 className="font-semibold text-accent">Final Performance</h4>
+                  <h4 className="font-semibold text-accent">Audition Round 2 (In-Person)</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Live audition round - 
+                    <span className="font-medium ml-1">Solo: ₹500 | Duet: ₹800 | Group: ₹2000</span>
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center p-4 border-l-4 border-primary bg-primary/5">
+                <div className="w-3 h-3 bg-primary rounded-full mr-4"></div>
+                <div>
+                  <h4 className="font-semibold text-primary">Final Performance</h4>
                   <p className="text-sm text-muted-foreground">August 15, 2024 - Live performance at NPA Nashik</p>
                 </div>
               </div>

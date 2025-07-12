@@ -58,6 +58,40 @@ const Rules = () => {
           </CardContent>
         </Card>
 
+        {/* Audition 2 Fees */}
+        <Card className="mb-8 shadow-lg border-orange-200">
+          <CardHeader className="bg-gradient-to-r from-orange-100 to-red-100">
+            <CardTitle className="text-2xl text-accent flex items-center">
+              <AlertTriangle className="w-6 h-6 mr-2" />
+              Audition 2: In-Person Round Fees
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="p-6">
+            <div className="grid md:grid-cols-3 gap-4">
+              <div className="text-center p-6 border-2 border-primary/20 rounded-lg bg-primary/5">
+                <Badge className="bg-primary text-primary-foreground mb-3 text-lg px-4 py-2">Solo</Badge>
+                <p className="text-3xl font-bold text-primary">₹500</p>
+                <p className="text-sm text-muted-foreground mt-2">Individual performance</p>
+              </div>
+              <div className="text-center p-6 border-2 border-secondary/20 rounded-lg bg-secondary/5">
+                <Badge className="bg-secondary text-secondary-foreground mb-3 text-lg px-4 py-2">Duet</Badge>
+                <p className="text-3xl font-bold text-secondary">₹800</p>
+                <p className="text-sm text-muted-foreground mt-2">Two participants</p>
+              </div>
+              <div className="text-center p-6 border-2 border-accent/20 rounded-lg bg-accent/5">
+                <Badge className="bg-accent text-accent-foreground mb-3 text-lg px-4 py-2">Group</Badge>
+                <p className="text-3xl font-bold text-accent">₹2,000</p>
+                <p className="text-sm text-muted-foreground mt-2">4-12 participants</p>
+              </div>
+            </div>
+            <div className="mt-4 p-4 bg-orange-50 border-l-4 border-orange-400 rounded">
+              <p className="text-sm text-orange-800">
+                <strong>Note:</strong> These fees are applicable only for participants who qualify for Audition 2 (In-Person Round)
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+
         {/* Age Groups */}
         <Card className="mb-8 shadow-lg">
           <CardHeader className="bg-gradient-to-r from-green-100 to-orange-100">
@@ -383,10 +417,7 @@ const Rules = () => {
                 <div className="w-3 h-3 bg-accent rounded-full mr-4"></div>
                 <div>
                   <h4 className="font-semibold text-accent">Audition Round 2 (In-Person)</h4>
-                  <p className="text-sm text-muted-foreground">
-                    Live audition round - 
-                    <span className="font-medium ml-1">Solo: ₹500 | Duet: ₹800 | Group: ₹2000</span>
-                  </p>
+                  <p className="text-sm text-muted-foreground">Live audition round for selected participants</p>
                 </div>
               </div>
               <div className="flex items-center p-4 border-l-4 border-primary bg-primary/5">

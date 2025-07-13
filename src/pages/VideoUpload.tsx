@@ -110,7 +110,7 @@ const VideoUpload = () => {
       const { data, error } = await supabase
         .from('registrations')
         .select('*')
-        .eq('id', registrationId.trim())
+        .eq('registration_id', registrationId.trim())
         .single();
 
       if (error || !data) {
@@ -123,20 +123,10 @@ const VideoUpload = () => {
         return;
       }
 
-      if (data.audition_status !== 'approved') {
-        toast({
-          title: "Not Approved",
-          description: "Your audition status is not approved yet. Please wait for the results.",
-          variant: "destructive",
-        });
-        setRegistration(null);
-        return;
-      }
-
       setRegistration(data);
       toast({
         title: "Registration Found ✅",
-        description: "You are approved for the next round!",
+        description: "You can now upload your video!",
         variant: "default",
       });
 
@@ -198,7 +188,7 @@ const VideoUpload = () => {
             <CardHeader>
               <CardTitle className="flex items-center text-green-600">
                 <CheckCircle className="w-5 h-5 mr-2" />
-                Registration Approved
+                Registration Found
               </CardTitle>
             </CardHeader>
             <CardContent>

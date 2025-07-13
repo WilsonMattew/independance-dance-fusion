@@ -12,6 +12,7 @@ import Status from "./pages/Status";
 import StatusDetails from "./pages/StatusDetails";
 import Rules from "./pages/Rules";
 import Admin from "./pages/Admin";
+import VideoUpload from "./pages/VideoUpload";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -31,6 +32,7 @@ const App = () => (
           <Route path="/status/:id" element={<StatusDetails />} />
           <Route path="/rules" element={<Rules />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/video-upload" element={<VideoUpload />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -124,11 +124,20 @@ const VideoUpload = () => {
       }
 
       setRegistration(data);
-      toast({
-        title: "Registration Found ✅",
-        description: "You can now upload your video!",
-        variant: "default",
-      });
+      
+      if (data.video_url) {
+        toast({
+          title: "Video Already Uploaded ✅",
+          description: "Your video has already been submitted successfully.",
+          variant: "default",
+        });
+      } else {
+        toast({
+          title: "Registration Found ✅",
+          description: "You can now upload your video!",
+          variant: "default",
+        });
+      }
 
     } catch (error) {
       console.error('Error checking registration:', error);

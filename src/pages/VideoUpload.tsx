@@ -12,9 +12,10 @@ const VideoUpload = () => {
   const [registration, setRegistration] = useState<any>(null);
   const [isChecking, setIsChecking] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const { toast } = useToast();
 
-  const handleVideoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -36,11 +37,17 @@ const VideoUpload = () => {
       return;
     }
 
+    setSelectedFile(file);
+  };
+
+  const handleVideoUpload = async () => {
+    if (!selectedFile) return;
+
     setUploading(true);
 
     try {
       const formDataToSend = new FormData();
-      formDataToSend.append('video', file);
+      formDataToSend.append('video', selectedFile);
 
       const response = await fetch('https://nskdo.in/upload.php', {
         method: 'POST',
@@ -265,22 +272,47 @@ const VideoUpload = () => {
 
                     <div>
                       <Label htmlFor="videoUpload" className="text-lg font-semibold">
-                        Upload Video (MP4 only, max 100MB)
+                        Select Video (MP4 only, max 100MB)
                       </Label>
                       <div className="mt-2">
                         <Input
                           id="videoUpload"
                           type="file"
                           accept="video/mp4"
-                          onChange={handleVideoUpload}
+                          onChange={handleFileSelect}
                           disabled={uploading}
                           className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/90"
                         />
                       </div>
-                      {uploading && (
-                        <div className="flex items-center mt-3 text-primary">
-                          <Upload className="w-4 h-4 mr-2 animate-spin" />
-                          <span className="text-sm">Uploading video...</span>
+                      
+                      {selectedFile && (
+                        <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <p className="text-sm font-medium text-blue-800">Selected File:</p>
+                              <p className="text-blue-600">{selectedFile.name}</p>
+                              <p className="text-xs text-blue-500">
+                                Size: {(selectedFile.size / (1024 * 1024)).toFixed(2)} MB
+                              </p>
+                            </div>
+                            <Button 
+                              onClick={handleVideoUpload} 
+                              disabled={uploading}
+                              className="ml-4"
+                            >
+                              {uploading ? (
+                                <>
+                                  <Upload className="w-4 h-4 mr-2 animate-spin" />
+                                  Uploading...
+                                </>
+                              ) : (
+                                <>
+                                  <Upload className="w-4 h-4 mr-2" />
+                                  Upload Video
+                                </>
+                              )}
+                            </Button>
+                          </div>
                         </div>
                       )}
                     </div>

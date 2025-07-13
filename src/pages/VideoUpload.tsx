@@ -50,11 +50,16 @@ const VideoUpload = () => {
       const data = await response.json();
 
       if (data.status === 'success' && data.url) {
+        console.log('Video uploaded successfully, updating database...');
+        console.log('Registration ID:', registration.id);
+        console.log('Video URL:', data.url);
+        
         // Update the registration with video URL
-        const { error } = await supabase
+        const { data: updateData, error } = await supabase
           .from('registrations')
           .update({ video_url: data.url })
-          .eq('id', registration.id);
+          .eq('id', registration.id)
+          .select();
 
         if (error) {
           console.error('Database update error:', error);
@@ -66,6 +71,8 @@ const VideoUpload = () => {
           return;
         }
 
+        console.log('Database updated successfully:', updateData);
+        
         // Update local state
         setRegistration({ ...registration, video_url: data.url });
 
